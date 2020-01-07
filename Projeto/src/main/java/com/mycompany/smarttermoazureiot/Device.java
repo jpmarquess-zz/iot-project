@@ -18,7 +18,6 @@ import com.pi4j.io.gpio.RaspiPin;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.util.Random;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,7 +87,7 @@ public class Device extends javax.swing.JFrame {
             
             // Add a custom application property to the message.
             // An IoT hub can filter on these properties without access to the message body.
-            msg.setProperty("distanceAlert", (distance > 30) ? "true" : "false");
+            msg.setProperty("distanceAlert", (distance > DirectMethodCallback.getDistance()) ? "true" : "false");
 
             System.out.println("Sending message: " + msgStr);
 
@@ -128,7 +127,7 @@ public class Device extends javax.swing.JFrame {
 
             // Add a custom application property to the message.
             // An IoT hub can filter on these properties without access to the message body.
-            msg.setProperty("distanceAlert", (distance > 30) ? "true" : "false");
+            msg.setProperty("distanceAlert", (distance > DirectMethodCallback.getDistance()) ? "true" : "false");
 
             System.out.println("Sending message: " + msgStr);
 

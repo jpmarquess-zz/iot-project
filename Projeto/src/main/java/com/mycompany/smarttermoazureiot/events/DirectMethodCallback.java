@@ -7,9 +7,6 @@ package com.mycompany.smarttermoazureiot.events;
 
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.DeviceMethodCallback;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.DeviceMethodData;
-import com.microsoft.azure.sdk.iot.device.DeviceTwin.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
