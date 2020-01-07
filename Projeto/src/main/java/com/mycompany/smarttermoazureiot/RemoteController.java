@@ -12,6 +12,8 @@ import com.mycompany.smarttermoazureiot.events.DirectMethodStatusCallback;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,6 +34,8 @@ public class RemoteController extends javax.swing.JFrame {
     
     public static String methodDistance = "setDistance";
     public static String methodAlarm = "setAlarmState";
+    
+    public static boolean alarm = true;
     
     /**
      * Creates new form RemoteController
@@ -55,7 +59,7 @@ public class RemoteController extends javax.swing.JFrame {
         jButtonChangeDistance = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonAlarmState = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaLog = new javax.swing.JTextArea();
 
@@ -111,7 +115,12 @@ public class RemoteController extends javax.swing.JFrame {
 
         jLabel1.setText("Alarme");
 
-        jButton1.setText("Ativar");
+        jButtonAlarmState.setText("Ativar");
+        jButtonAlarmState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAlarmStateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -124,7 +133,7 @@ public class RemoteController extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(83, 83, 83))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jButtonAlarmState)
                         .addGap(69, 69, 69))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -133,7 +142,7 @@ public class RemoteController extends javax.swing.JFrame {
                 .addGap(60, 60, 60)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jButtonAlarmState)
                 .addGap(69, 69, 69))
         );
 
@@ -197,6 +206,38 @@ public class RemoteController extends javax.swing.JFrame {
         System.out.println("Done!");
     }//GEN-LAST:event_jButtonChangeDistanceActionPerformed
 
+    private void jButtonAlarmStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlarmStateActionPerformed
+        if (alarm == true) {
+            try {
+                System.out.println("Calling direct method...");
+                DeviceMethod methodClient = DeviceMethod.createFromConnectionString(iotHubConnectionString);
+                
+                alarm = false;
+                
+                // Call the direct method.l
+                MethodResult result = methodClient.invoke(deviceId, methodAlarm, responseTimeout, connectTimeout, alarm);
+            } catch (IOException ex) {
+                Logger.getLogger(RemoteController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IotHubException ex) {
+                Logger.getLogger(RemoteController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                System.out.println("Calling direct method...");
+                DeviceMethod methodClient = DeviceMethod.createFromConnectionString(iotHubConnectionString);
+                
+                alarm = true;
+                
+                // Call the direct method.l
+                MethodResult result = methodClient.invoke(deviceId, methodAlarm, responseTimeout, connectTimeout, alarm);
+            } catch (IOException ex) {
+                Logger.getLogger(RemoteController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IotHubException ex) {
+                Logger.getLogger(RemoteController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonAlarmStateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -233,7 +274,7 @@ public class RemoteController extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAlarmState;
     private javax.swing.JButton jButtonChangeDistance;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelDistance;

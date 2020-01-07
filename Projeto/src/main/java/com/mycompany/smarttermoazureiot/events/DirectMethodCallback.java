@@ -44,11 +44,12 @@ public class DirectMethodCallback implements DeviceMethodCallback {
 
                 break;
             }
-            /*case "setAlarmeState": {
-                int interval;
+            case "setAlarmeState": {
+                boolean interval;
                 try {
                     int status = METHOD_SUCCESS;
-                    interval = Integer.parseInt(payload);
+                    //interval = Integer.parseInt(payload);
+                    interval = Boolean.parseBoolean(payload);
                     System.out.println(payload);
                     setAlarmState(interval);
                     deviceMethodData = new DeviceMethodData(status, "\nDistancia mínima:" + interval + "\nExecuted direct method " + methodName);
@@ -58,7 +59,7 @@ public class DirectMethodCallback implements DeviceMethodCallback {
                 }
 
                 break;
-            }*/
+            }
             default: {
                 int status = METHOD_NOT_DEFINED;
                 deviceMethodData = new DeviceMethodData(status, "Not defined direct method " + methodName);
@@ -75,11 +76,11 @@ public class DirectMethodCallback implements DeviceMethodCallback {
         return distance;
     }
 
-    /*public static void setAlarmState(boolean alarm) {
+    public static void setAlarmState(boolean alarm) {
         DirectMethodCallback.alarm = alarm;
     }
     
     public static boolean getAlarmState() {
         return alarm;
-    }*/
+    }
 }

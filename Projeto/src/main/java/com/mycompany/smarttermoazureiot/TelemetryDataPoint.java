@@ -12,8 +12,6 @@ import com.google.gson.Gson;
  * @author Turma A
  */
 public class TelemetryDataPoint {
-    /*public double temperature;
-    public double humidity;*/
     public double distance;
     
     public String serialize() {

@@ -78,9 +78,8 @@ public class Device extends javax.swing.JFrame {
             TelemetryDataPoint telemetryDataPoint = new TelemetryDataPoint();
 
             telemetryDataPoint.distance = distance;
-            if (distance < DirectMethodCallback.getDistance()) {
+            if (distance < DirectMethodCallback.getDistance() && DirectMethodCallback.getAlarmState() == true) {
                 pin.high();
-                
             } else {
                 pin.low();
             }
@@ -243,52 +242,6 @@ public class Device extends javax.swing.JFrame {
             }
         }
     }
-
-    /*private void simulateDevice() {
-        try {
-            // Initialize the simulated telemetry.
-            double minTemperature = 20;
-            double minHumidity = 60;
-            Random rand = new Random();
-
-            while (true) {
-                // Simulate telemetry.
-                double currentTemperature = minTemperature + rand.nextDouble() * 15;
-                double currentHumidity = minHumidity + rand.nextDouble() * 20;
-                telemetryDataPoint.temperature = currentTemperature;
-                telemetryDataPoint.humidity = currentHumidity;
-
-                double currentDistance = 10;
-
-                TelemetryDataPoint telemetryDataPoint = new TelemetryDataPoint();
-
-                telemetryDataPoint.distance = currentDistance;
-
-                // Add the telemetry to the message body as JSON.
-                String msgStr = telemetryDataPoint.serialize();
-                Message msg = new Message(msgStr);
-
-                // Add a custom application property to the message.
-                // An IoT hub can filter on these properties without access to the message body.
-                msg.setProperty("distanceAlert", (currentDistance > 30) ? "true" : "false");
-
-                System.out.println("Sending message: " + msgStr);
-
-                Object lockobj = new Object();
-
-                // Send the message.
-                EventCallback callback = new EventCallback();
-                client.sendEventAsync(msg, (IotHubEventCallback) callback, lockobj);
-
-                synchronized (lockobj) {
-                    lockobj.wait();
-                }
-                Thread.sleep(1000);
-            }
-        } catch (InterruptedException e) {
-            System.out.println("Finished.");
-        }
-    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
